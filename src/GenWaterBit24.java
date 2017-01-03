@@ -3,9 +3,13 @@ import java.awt.image.Raster;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+
+import com.csvreader.CsvReader;
+import com.csvreader.CsvWriter;
 
 import javax.imageio.ImageIO;
 
@@ -29,6 +33,12 @@ public class GenWaterBit24 {
 	ArrayList<Integer> sp3;
 	ArrayList<Integer> sp4;
 
+	/////////// Test for CSV /////////////////
+	private static final String COMMA_DELIMITER = ",";
+	private static final String NEW_LINE_SEPARATOR = "\n";
+	//////////////////////////////////////////
+	
+	
 	// Constructor
 	GenWaterBit24() {
 		this.image = null;
@@ -67,10 +77,10 @@ public class GenWaterBit24 {
 			this.height = this.image.getHeight();
 			this.width = this.image.getWidth();
 
-			this.genWatermark24_1();
+			///this.genWatermark24_1();
 			this.genWatermark24_2();
-			this.genWatermark24_3();
-			this.genWatermark24_4();
+			//this.genWatermark24_3();
+			//this.genWatermark24_4();
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -222,7 +232,8 @@ public class GenWaterBit24 {
 						a1 = this.getGrayPixel(i, j);
 						tempValue = (a0 + (a1 * s1)) % 251;
 						this.sp2.add(tempValue);
-
+						
+						/*
 						try {
 							String charSp = Integer.toString(sp2.get(ii));
 							fw = new BufferedWriter(new OutputStreamWriter(
@@ -233,21 +244,56 @@ public class GenWaterBit24 {
 
 						} catch (Exception e) {
 							e.printStackTrace();
+						}*/
+						
+						
+						////////////////////////////////////////Test CSV File///////////////////////////////////////
+						
+						
+						String outputFile = "test24_2.csv";
+						boolean alreadyExists = new File(outputFile).exists();
+						
+						try {
+							// use FileWriter constructor that specifies open for appending
+							CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
+							String charSp = Integer.toString(sp2.get(ii));
+							
+							// if the file didn't already exist then we need to write out the header line
+							if (!alreadyExists)
+							{
+								//csvOutput.write("id");
+								//csvOutput.write("name");
+								//csvOutput.endRecord();
+							}
+							// else assume that the file already has the correct header line
+							
+							// write out a few records
+							csvOutput.write(charSp);
+							
+							csvOutput.endRecord();
+							
+							
+							csvOutput.close();
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
+						
+						//////////////////////////////////////Test CSV File///////////////////////////////////////
 
 					}
 				}
 				ii++;
 			}
 		}
-
+		
+		/*
 		if (fw != null) {
 			try {
 				fw.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 	}
 
