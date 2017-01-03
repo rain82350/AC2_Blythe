@@ -322,7 +322,6 @@ public class GenWaterBit24 {
 		for (i = 0; i < this.image.getHeight(); i++) {
 			for (j = 0; j < this.image.getWidth(); j++) {
 				// 把原本的 j 值暫存起來
-				ii++;
 				for (int k = 0; k < T; k++) {
 					a0 = this.getGrayPixel(i, j);
 
@@ -330,7 +329,7 @@ public class GenWaterBit24 {
 						j++;
 						a1 = this.getGrayPixel(i, j);
 						tempValue = (a0 + (a1 * s3)) % 251;
-						this.sp3.add(tempValue);
+						this.sp4.add(tempValue);
 
 						try {
 							String charSp = Integer.toString(sp4.get(ii));
@@ -347,7 +346,7 @@ public class GenWaterBit24 {
 
 					}
 				}
-
+				ii++;
 			}
 		}
 
