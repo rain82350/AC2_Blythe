@@ -39,14 +39,14 @@ public class Main {
 		coverImage = new BufferedImage(cover1.getHeight(),cover1.getWidth(),BufferedImage.TYPE_INT_RGB);
 		
 		// 計算secret的pixel值(要分配到每個CoverImage的)
-		GenWaterBit24 waterbit24 = new GenWaterBit24(subSecretInput1, T, 0); 	
+		//GenWaterBit24 waterbit24 = new GenWaterBit24(subSecretInput1, T, 0); 	
 		//waterbit24.getWatermark24_1();
 	
-		//GenWaterBit34 waterbit34 = new GenWaterBit34(secretInput, T, 0);
+		GenWaterBit34 waterbit34 = new GenWaterBit34(subSecretInput1, T, 0);
 		//System.out.println(waterbit34.getWatermark34_1().get(85));
 		//System.out.println(waterbit34.getWatermark34_1().size());	
 		
-		//GenWaterBit44 waterbit44 = new GenWaterBit44(secretInput, T, 0);
+		//GenWaterBit44 waterbit44 = new GenWaterBit44(subSecretInput1, T, 0);
 		//System.out.println(waterbit44.getWatermark44_1().size());
 		
 		//waterbit44.getWatermark44_1();
