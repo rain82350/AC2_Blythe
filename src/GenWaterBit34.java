@@ -28,7 +28,7 @@ public class GenWaterBit34 {
 	ArrayList<Integer> sp2;
 	ArrayList<Integer> sp3;
 	ArrayList<Integer> sp4;
-	ArrayList<Integer> pixelArrList = new ArrayList<Integer>();;
+	ArrayList<Integer> pixelArrList = new ArrayList<Integer>();
 
 	private BufferedWriter fw = null;
 

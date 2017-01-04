@@ -32,6 +32,7 @@ public class GenWaterBit24 {
 	ArrayList<Integer> sp2;
 	ArrayList<Integer> sp3;
 	ArrayList<Integer> sp4;
+	ArrayList<Integer> pixelArrList = new ArrayList<Integer>();
 
 	// Constructor
 	GenWaterBit24() {
@@ -71,10 +72,11 @@ public class GenWaterBit24 {
 			this.height = this.image.getHeight();
 			this.width = this.image.getWidth();
 
-			// /this.genWatermark24_1();
+			this.arr2ArrList();
+			this.genWatermark24_1();
 			//this.genWatermark24_2();
-			this.genWatermark24_3();
-			this.genWatermark24_4();
+			//this.genWatermark24_3();
+			//this.genWatermark24_4();
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -128,6 +130,21 @@ public class GenWaterBit24 {
 		tmpRas = this.image.getData();
 		return tmpRas.getSample(j, i, 0);
 	}
+	
+	private ArrayList<Integer> arr2ArrList() {
+
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
+				// System.out.println(this.getGrayPixel(i, j));
+				if (this.getGrayPixel(i, j) == 0) {
+				} else {
+					this.pixelArrList.add(this.getGrayPixel(i, j));
+				}
+			}
+		}
+		System.out.println("PixelArrList size: " + this.pixelArrList.size());
+		return this.pixelArrList;
+	}
 
 	public ArrayList<Integer> getWatermark24_1() {
 		return this.sp1;
@@ -162,20 +179,19 @@ public class GenWaterBit24 {
 		int tempValue = 0;
 		File file = new File("watermarkBit24_1.txt");
 		File testfile = new File("test24_1.txt");
+		int[] a = new int[2];
+		int b = 0;
+		int count = 0;
 
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			for (int j = 0; j < this.image.getWidth(); j++) {
-				tempValue = 0;
-				// 把原本的 j 值暫存起來
-				for (int k = 0; k < T; k++) {
+		while (count < (32 * 32 * 32) - 1) {
 
-					tempValue += this.getGrayPixel(i, j);
-					if (k + 1 != T) {
-						j++;
-					}
-				}
-
-				this.sp1.add(tempValue % 251);
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			
+			tempValue = (a[0] + a[1]) % 251;
+			this.sp1.add(tempValue % 251);
 
 				/*
 				 * try { String charSp = Integer.toString(sp1.get(ii)); fw = new
@@ -187,7 +203,7 @@ public class GenWaterBit24 {
 				 */
 				// //////////////////////////////////////CSV
 				// File///////////////////////////////////////
-				String outputFile = "test24_21.csv";
+				String outputFile = "test24_1.csv";
 				boolean alreadyExists = new File(outputFile).exists();
 
 				try {
@@ -195,7 +211,7 @@ public class GenWaterBit24 {
 					// open for appending
 					CsvWriter csvOutput = new CsvWriter(new FileWriter(
 							outputFile, true), ',');
-					String charSp = Integer.toString(sp2.get(ii));
+					String charSp = Integer.toString(sp1.get(ii));
 
 					// if the file didn't already exist then we need
 					// to write out the header line
@@ -213,21 +229,17 @@ public class GenWaterBit24 {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
-				// ////////////////////////////////////CSV
-				// File///////////////////////////////////////
-
+				// ////////////CSV File/////////////////////////
 				ii++;
-			}
 		}
-
+		/*
 		if (fw != null) {
 			try {
 				fw.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 	}
 
