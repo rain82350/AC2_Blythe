@@ -46,6 +46,9 @@ public class Main {
 		waterValue.addAll(waterbit34.getWatermark34_1());
 		waterValue.addAll(waterbit44.getWatermark44_1());
 		
+		//Embed class
+		CropString member1 = new CropString(coverInput);
+		
 		
 		System.out.println(waterValue.size());
 		// System.out.println(waterbit34.getWatermark34_1().get(85));

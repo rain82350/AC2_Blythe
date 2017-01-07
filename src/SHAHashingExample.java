@@ -9,22 +9,29 @@ public class SHAHashingExample {
 		String password = "123456";
 		
 		System.out.println(hash(password));
-		//String h2b = Integer.toBinaryString(hash(password));
+		
 		
 		/*
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(password.getBytes());
 
         byte byteData[] = md.digest();
-
+        String a = new String();
+        int b=0;
+        
         //convert the byte to hex format method 1
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < byteData.length; i++) {
          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
-
-        System.out.println("Hex format : " + sb.toString());
-
+        
+        //a=Integer.valueOf("sb.charAt(0)",16).toString() ;
+        
+        //System.out.println("Hex format : " + sb.charAt(0));
+        a = sb.charAt(0)+"";
+        b = Integer.valueOf(a);
+        System.out.println(b);*/
+/*	
         //convert the byte to hex format method 2
         StringBuffer hexString = new StringBuffer();
     	for (int i=0;i<byteData.length;i++) {
@@ -36,12 +43,14 @@ public class SHAHashingExample {
 		*/
 	}
 	
-	public static String hash (String s) throws NoSuchAlgorithmException{
+	public static int hash (String s) throws NoSuchAlgorithmException{
 		
 
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(s.getBytes());
         byte byteData[] = md.digest();
+        String a = new String();
+        int b=0;
         
         //convert the byte to hex format method
         StringBuffer sb = new StringBuffer();
@@ -49,11 +58,10 @@ public class SHAHashingExample {
          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
         
-        int i = Integer.parseInt(sb.toString(), 16);
-        String bin = Integer.toBinaryString(i);
-        
-		return bin;
-		//return sb.toString();
+        a = sb.charAt(0)+"";
+        b = Integer.valueOf(a);
+        //System.out.println(b);
+		return b;
 	}
 
 }
