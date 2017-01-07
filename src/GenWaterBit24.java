@@ -55,7 +55,7 @@ public class GenWaterBit24 {
 			this.genWatermark24_3();
 			this.genWatermark24_4();
 
-			// System.out.println("Input OK! ");
+			System.out.println("Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -74,9 +74,9 @@ public class GenWaterBit24 {
 
 			this.arr2ArrList();
 			this.genWatermark24_1();
-			//this.genWatermark24_2();
-			//this.genWatermark24_3();
-			//this.genWatermark24_4();
+			this.genWatermark24_2();
+			this.genWatermark24_3();
+			this.genWatermark24_4();
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -130,7 +130,7 @@ public class GenWaterBit24 {
 		tmpRas = this.image.getData();
 		return tmpRas.getSample(j, i, 0);
 	}
-	
+
 	private ArrayList<Integer> arr2ArrList() {
 
 		for (int i = 0; i < this.height; i++) {
@@ -189,57 +189,53 @@ public class GenWaterBit24 {
 			a[b] = this.pixelArrList.get(count++);
 			b++;
 			a[b] = this.pixelArrList.get(count++);
-			
+
 			tempValue = (a[0] + a[1]) % 251;
 			this.sp1.add(tempValue % 251);
 
-				/*
-				 * try { String charSp = Integer.toString(sp1.get(ii)); fw = new
-				 * BufferedWriter(new OutputStreamWriter( new
-				 * FileOutputStream(testfile, true), "UTF-8"));
-				 * fw.append(charSp); fw.append(", "); fw.flush();
-				 * 
-				 * } catch (Exception e) { e.printStackTrace(); }
-				 */
-				// //////////////////////////////////////CSV
-				// File///////////////////////////////////////
-				String outputFile = "test24_1.csv";
-				boolean alreadyExists = new File(outputFile).exists();
+			/*
+			 * try { String charSp = Integer.toString(sp1.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new
+			 * FileOutputStream(testfile, true), "UTF-8")); fw.append(charSp);
+			 * fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
+			// //////////////////////////////////////CSV
+			// File///////////////////////////////////////
+			String outputFile = "test24_11.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-				try {
-					// use FileWriter constructor that specifies
-					// open for appending
-					CsvWriter csvOutput = new CsvWriter(new FileWriter(
-							outputFile, true), ',');
-					String charSp = Integer.toString(sp1.get(ii));
-
-					// if the file didn't already exist then we need
-					// to write out the header line
-					if (!alreadyExists) {
-						// csvOutput.write("id");
-						// csvOutput.write("name");
-						// csvOutput.endRecord();
-					}
-					// else assume that the file already has the
-					// correct header line
-
-					csvOutput.write(charSp);
-					csvOutput.endRecord();
-					csvOutput.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				// ////////////CSV File/////////////////////////
-				ii++;
-		}
-		/*
-		if (fw != null) {
 			try {
-				fw.close();
-			} catch (Exception e) {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp1.get(ii));
+
+				// if the file didn't already exist then we need
+				// to write out the header line
+				if (!alreadyExists) {
+					// csvOutput.write("id");
+					// csvOutput.write("name");
+					// csvOutput.endRecord();
+				}
+				// else assume that the file already has the
+				// correct header line
+
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}*/
+			// ////////////CSV File/////////////////////////
+			ii++;
+		}
+		/*
+		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
+		 * e.printStackTrace(); } }
+		 */
 
 	}
 
@@ -251,77 +247,62 @@ public class GenWaterBit24 {
 		int tempValue = 0;
 		File file = new File("watermarkBit24_2.txt");
 		File testfile = new File("test24_2.txt");
-		// template value a0, a1
-		int a0 = 0;
-		int a1 = 0;
+		int[] a = new int[2];
+		int b = 0;
+		int count = 0;
 		// secret value
 		int s1 = 2;
-		int flag = 0;
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			for (int j = 0; j < this.image.getWidth(); j++) {
-				// 把原本的 j 值暫存起來
-				flag = 0;
-				for (int k = 0; k < T; k++) {
 
-					a0 = this.getGrayPixel(i, j);
+		while (count < (32 * 32 * 32) - 1) {
 
-					if (k + 1 != T) {
-						j++;
-						a1 = this.getGrayPixel(i, j);
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			tempValue = (a[0] + (a[1] * s1)) % 251;
+			this.sp2.add(tempValue);
 
-						if (a0 == 0 | a1 == 0) {
+			/*
+			 * try { String charSp = Integer.toString(sp2.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new
+			 * FileOutputStream(testfile, true), "UTF-8")); fw.append(charSp);
+			 * fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
 
-						} else {
-							flag = 1;
-							tempValue = (a0 + (a1 * s1)) % 251;
-							this.sp2.add(tempValue);
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test24_21.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp2.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(testfile, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
+			try {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp2.get(ii));
 
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test24_2.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
-
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp2.get(ii));
-
-								// if the file didn't already exist then we need
-								// to write out the header line
-								if (!alreadyExists) {
-									// csvOutput.write("id");
-									// csvOutput.write("name");
-									// csvOutput.endRecord();
-								}
-								// else assume that the file already has the
-								// correct header line
-
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-
-							// ////////////CSV File/////////////////////////
-						}
-					}
+				// if the file didn't already exist then we need
+				// to write out the header line
+				if (!alreadyExists) {
+					// csvOutput.write("id");
+					// csvOutput.write("name");
+					// csvOutput.endRecord();
 				}
-				if (flag == 1)
-					ii++;
+				// else assume that the file already has the
+				// correct header line
+
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+
+			// ////////////CSV File/////////////////////////
+
+			ii++;
+
 		}
 
 		/*
@@ -340,84 +321,65 @@ public class GenWaterBit24 {
 		File testfile = new File("test24_3.txt");
 		int tempValue = 0;
 		// template value a0, a1
-		int a0 = 0;
-		int a1 = 0;
+		int[] a = new int[2];
+		int b = 0;
+		int count = 0;
 		// secret value
 		int s2 = 3;
-		int flag = 0;
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			for (int j = 0; j < this.image.getWidth(); j++) {
-				// 把原本的 j 值暫存起來
-				flag = 0;
-				for (int k = 0; k < T; k++) {
-					a0 = this.getGrayPixel(i, j);
 
-					if (k + 1 != T) {
-						j++;
-						a1 = this.getGrayPixel(i, j);
+		while (count < (32 * 32 * 32) - 1) {
 
-						if (a0 == 0 | a1 == 0) {
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			tempValue = (a[0] + (a[1] * s2)) % 251;
+			this.sp3.add(tempValue);
+			/*
+			 * try { String charSp = Integer.toString(sp3.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new
+			 * FileOutputStream(testfile, true), "UTF-8")); fw.append(charSp);
+			 * fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
 
-						} else {
-							flag = 1;
-							tempValue = (a0 + (a1 * s2)) % 251;
-							this.sp3.add(tempValue);
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp3.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(testfile, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test24_31.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test24_3.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
-
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp3.get(ii));
-
-								// if the file didn't already exist then we need
-								// to write out the header line
-								if (!alreadyExists) {
-									// csvOutput.write("id");
-									// csvOutput.write("name");
-									// csvOutput.endRecord();
-								}
-								// else assume that the file already has the
-								// correct header line
-
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// ////////////CSV File/////////////////////////
-
-					}
-				}
-				if (flag == 1)
-					ii++;
-			}
-		}
-
-		if (fw != null) {
 			try {
-				fw.close();
-			} catch (Exception e) {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp3.get(ii));
+
+				// if the file didn't already exist then we need
+				// to write out the header line
+				if (!alreadyExists) {
+					// csvOutput.write("id");
+					// csvOutput.write("name");
+					// csvOutput.endRecord();
+				}
+				// else assume that the file already has the
+				// correct header line
+
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
 
+			// ////////////CSV File/////////////////////////
+
+			ii++;
+		}
+		/*
+		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
+		 * e.printStackTrace(); } }
+		 */
 	}
 
 	public void genWatermark24_4() {
@@ -429,86 +391,66 @@ public class GenWaterBit24 {
 		File testfile = new File("test24_4.txt");
 		int tempValue = 0;
 		// template value a0, a1
-		int a0 = 0;
-		int a1 = 0;
+		int[] a = new int[2];
+		int b = 0;
+		int count = 0;
 		// secret value
 		int s3 = 4;
 		int i = 0, j = 0;
 		int flag = 0;
-		for (i = 0; i < this.image.getHeight(); i++) {
-			for (j = 0; j < this.image.getWidth(); j++) {
-				// 把原本的 j 值暫存起來
-				flag = 0;
-				for (int k = 0; k < T; k++) {
-					a0 = this.getGrayPixel(i, j);
+		while (count < (32 * 32 * 32) - 1) {
 
-					if (k + 1 != T) {
-						j++;
-						a1 = this.getGrayPixel(i, j);
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			tempValue = (a[0] + (a[1] * s3)) % 251;
+			this.sp4.add(tempValue);
 
-						if (a0 == 0 | a1 == 0) {
+			/*
+			 * try { String charSp = Integer.toString(sp4.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new
+			 * FileOutputStream(testfile, true), "UTF-8")); fw.append(charSp);
+			 * fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
 
-						} else {
-							flag = 1;
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test24_41.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							tempValue = (a0 + (a1 * s3)) % 251;
-							this.sp4.add(tempValue);
-
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp4.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(testfile, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
-
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test24_4.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
-
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp4.get(ii));
-
-								// if the file didn't already exist then we need
-								// to write out the header line
-								if (!alreadyExists) {
-									// csvOutput.write("id");
-									// csvOutput.write("name");
-									// csvOutput.endRecord();
-								}
-								// else assume that the file already has the
-								// correct header line
-
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// ////////////CSV File/////////////////////////
-
-					}
-				}
-				if (flag == 1)
-					ii++;
-			}
-		}
-
-		if (fw != null) {
 			try {
-				fw.close();
-			} catch (Exception e) {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp4.get(ii));
+
+				// if the file didn't already exist then we need
+				// to write out the header line
+				if (!alreadyExists) {
+					// csvOutput.write("id");
+					// csvOutput.write("name");
+					// csvOutput.endRecord();
+				}
+				// else assume that the file already has the
+				// correct header line
+
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			// ////////////CSV File/////////////////////////
+			ii++;
+
 		}
+		/*
+		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
+		 * e.printStackTrace(); } }
+		 */
 
 	}
 }
