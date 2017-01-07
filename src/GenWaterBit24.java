@@ -74,10 +74,10 @@ public class GenWaterBit24 {
 
 			this.arr2ArrList();
 			this.genWatermark24_1();
-			this.genWatermark24_2();
-			this.genWatermark24_3();
-			this.genWatermark24_4();
-			System.out.println("Watermarkbits have been generated successful ! ");
+			//this.genWatermark24_2();
+			//this.genWatermark24_3();
+			//this.genWatermark24_4();
+			System.out.println("24 Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -143,7 +143,7 @@ public class GenWaterBit24 {
 				}
 			}
 		}
-		System.out.println("PixelArrList size: " + this.pixelArrList.size());
+		//System.out.println("PixelArrList size: " + this.pixelArrList.size());
 		return this.pixelArrList;
 	}
 

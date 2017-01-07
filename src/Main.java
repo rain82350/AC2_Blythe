@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -36,8 +37,17 @@ public class Main {
 				+ cover1.getWidth());
 
 		// 計算secret的pixel值(要分配到每個CoverImage的)
-		// waterbit24.getWatermark24_1();
+		
+		GenWaterBit24 waterbit24 = new GenWaterBit24(subSecretInput1, T, 0);
+		GenWaterBit34 waterbit34 = new GenWaterBit34(subSecretInput1, T, 0);
 		GenWaterBit44 waterbit44 = new GenWaterBit44(subSecretInput1, T, 0);
+		ArrayList<Integer> waterValue = new ArrayList<Integer>();
+		waterValue = waterbit24.getWatermark24_1();
+		waterValue.addAll(waterbit34.getWatermark34_1());
+		waterValue.addAll(waterbit44.getWatermark44_1());
+		
+		
+		System.out.println(waterValue.size());
 		// System.out.println(waterbit34.getWatermark34_1().get(85));
 		// System.out.println(waterbit34.getWatermark34_1().size());
 

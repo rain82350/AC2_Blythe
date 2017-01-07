@@ -72,9 +72,11 @@ public class GenWaterBit34 {
 
 			this.arr2ArrList();
 			this.genWatermark34_1();
-			this.genWatermark34_2();
-			this.genWatermark34_3();
-			this.genWatermark34_4();
+			//this.genWatermark34_2();
+			//this.genWatermark34_3();
+			//this.genWatermark34_4();
+			System.out
+			.println("34 Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -140,7 +142,7 @@ public class GenWaterBit34 {
 				}
 			}
 		}
-		System.out.println("PixelArrList size: " + this.pixelArrList.size());
+		//System.out.println("PixelArrList size: " + this.pixelArrList.size());
 		return this.pixelArrList;
 	}
 

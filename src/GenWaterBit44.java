@@ -71,12 +71,12 @@ public class GenWaterBit44 {
 			this.width = this.image.getWidth();
 
 			this.arr2ArrList();
-			//this.genWatermark44_1();
-			this.genWatermark44_2();
-			this.genWatermark44_3();
-			this.genWatermark44_4();
+			this.genWatermark44_1();
+			//this.genWatermark44_2();
+			//this.genWatermark44_3();
+			//this.genWatermark44_4();
 			System.out
-					.println("Watermarkbits have been generated successful ! ");
+					.println("44 Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -142,7 +142,7 @@ public class GenWaterBit44 {
 				}
 			}
 		}
-		System.out.println("PixelArrList size: " + this.pixelArrList.size());
+		//System.out.println("PixelArrList size: " + this.pixelArrList.size());
 		return this.pixelArrList;
 	}
 
@@ -195,6 +195,7 @@ public class GenWaterBit44 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test44_1.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -222,7 +223,7 @@ public class GenWaterBit44 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 
 			ii++;
 		}
@@ -268,6 +269,7 @@ public class GenWaterBit44 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test44_2.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -285,7 +287,7 @@ public class GenWaterBit44 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 			ii++;
 		}
 		/*
@@ -330,6 +332,7 @@ public class GenWaterBit44 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test44_3.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -347,7 +350,7 @@ public class GenWaterBit44 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 			ii++;
 		}
 		/*
@@ -391,6 +394,7 @@ public class GenWaterBit44 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test44_4.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -408,7 +412,7 @@ public class GenWaterBit44 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 			ii++;
 		}
 		/*
