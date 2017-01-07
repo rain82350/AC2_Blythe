@@ -71,7 +71,7 @@ public class GenWaterBit44 {
 			this.width = this.image.getWidth();
 
 			this.arr2ArrList();
-			this.genWatermark44_1();
+			//this.genWatermark44_1();
 			this.genWatermark44_2();
 			this.genWatermark44_3();
 			this.genWatermark44_4();
