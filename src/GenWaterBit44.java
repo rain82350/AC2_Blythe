@@ -30,6 +30,7 @@ public class GenWaterBit44 {
 	ArrayList<Integer> sp2;
 	ArrayList<Integer> sp3;
 	ArrayList<Integer> sp4;
+	ArrayList<Integer> pixelArrList = new ArrayList<Integer>();
 
 	// Constructor
 	GenWaterBit44() {
@@ -46,8 +47,8 @@ public class GenWaterBit44 {
 			red = 0;
 			green = 0;
 			blue = 0;
-	
-			//this.genWatermark44_1();
+
+			// this.genWatermark44_1();
 			this.genWatermark44_2();
 			this.genWatermark44_3();
 			this.genWatermark44_4();
@@ -69,10 +70,13 @@ public class GenWaterBit44 {
 			this.height = this.image.getHeight();
 			this.width = this.image.getWidth();
 
+			this.arr2ArrList();
 			this.genWatermark44_1();
 			this.genWatermark44_2();
 			this.genWatermark44_3();
 			this.genWatermark44_4();
+			System.out
+					.println("Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -127,6 +131,21 @@ public class GenWaterBit44 {
 		return tmpRas.getSample(j, i, 0);
 	}
 
+	private ArrayList<Integer> arr2ArrList() {
+
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
+				// System.out.println(this.getGrayPixel(i, j));
+				if (this.getGrayPixel(i, j) == 0) {
+				} else {
+					this.pixelArrList.add(this.getGrayPixel(i, j));
+				}
+			}
+		}
+		System.out.println("PixelArrList size: " + this.pixelArrList.size());
+		return this.pixelArrList;
+	}
+
 	public ArrayList<Integer> getWatermark44_1() {
 		return this.sp1;
 	}
@@ -148,47 +167,69 @@ public class GenWaterBit44 {
 		int ii = 0;
 		this.sp1 = new ArrayList<Integer>();
 		int tempValue = 0;
+		int[] a = new int[4];
+		int b = 0;
+		int count = 0;
 
 		File file = new File("watermarkBit44_1.txt");
 		// template value a0, a1, a2
 
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			flag: {
-				for (int j = 0; j < this.image.getWidth(); j++) {
-					// 把原本的 j 值暫存起來
-					for (int k = 0; k < T + 2; k++) {
+		while (count < (32 * 32 * 32) - 1) {
 
-						if (j >= 256) {
-							// System.out.println("Bug...");
-							break flag;
-						} else {
-							tempValue += this.getGrayPixel(i, j);
-							if (k + 1 != T + 2) {
-								j++;
-							}
-						}
-					}
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
 
-					this.sp1.add(tempValue % 251);
-					// System.out.print(sp[ii] + " ");
-					/*
-					 * try { String charSp = Integer.toString(sp1.get(ii)); fw =
-					 * new BufferedWriter(new OutputStreamWriter( new
-					 * FileOutputStream(file, true), "UTF-8"));
-					 * fw.append(charSp); fw.append(", "); fw.flush();
-					 * 
-					 * } catch (Exception e) { e.printStackTrace(); }
-					 */
+			tempValue = (a[0] + a[1] + a[2] + a[3]) % 251;
+			this.sp1.add(tempValue % 251);
+			// System.out.print(sp[ii] + " ");
+			/*
+			 * try { String charSp = Integer.toString(sp1.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new FileOutputStream(file,
+			 * true), "UTF-8")); fw.append(charSp); fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test44_1.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-					ii++;
+			try {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp1.get(ii));
+
+				// if the file didn't already exist then we need
+				// to write out the header line
+				if (!alreadyExists) {
+					// csvOutput.write("id");
+					// csvOutput.write("name");
+					// csvOutput.endRecord();
 				}
+				// else assume that the file already has the
+				// correct header line
+
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			// ////////////CSV File/////////////////////////
+
+			ii++;
 		}
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
 		 * e.printStackTrace(); } }
 		 */
-
 	}
 
 	public void genWatermark44_2() {
@@ -202,77 +243,55 @@ public class GenWaterBit44 {
 		// template value a0, a1, a2
 		int[] a = new int[4];
 		int b = 0;
+		int count = 0;
 		// secret value
 		int s1 = 2;
-		int flag = 0;
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			flag2: {
-				for (int j = 0; j < this.image.getWidth(); j += 4) {
-					// 把原本的 j 值暫存起來
-					flag = 0;
-					if (j >= 255) {
-						break flag2;
-					} else {
-						// System.out.println(i + " " + j);
-						b = 0;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
 
-						if (a[0] == 0 | a[1] == 0 | a[2] == 0 | a[3] == 0) {
+		while (count < (32 * 32 * 32) - 1) {
 
-						} else {
-							flag = 1;
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
 
-							tempValue = (int) ((a[0] + (a[1] * s1)
-									+ (a[2] * (Math.pow(s1, 2))) + a[3]
-									* (Math.pow(s1, 3))) % 251);
-							this.sp2.add(tempValue);
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp2.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(file, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test44_2.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
+			tempValue = (int) ((a[0] + (a[1] * s1) + (a[2] * (Math.pow(s1, 2))) + a[3]
+					* (Math.pow(s1, 3))) % 251);
+			this.sp2.add(tempValue);
+			/*
+			 * try { String charSp = Integer.toString(sp2.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new FileOutputStream(file,
+			 * true), "UTF-8")); fw.append(charSp); fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test44_2.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp2.get(ii));
+			try {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp2.get(ii));
 
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// ////////////CSV File/////////////////////////
-					}
-					if (flag == 1)
-						ii++;
-				}
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			
+			// ////////////CSV File/////////////////////////
+			ii++;
 		}
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
 		 * e.printStackTrace(); } }
 		 */
-
 	}
 
 	public void genWatermark44_3() {
@@ -286,70 +305,50 @@ public class GenWaterBit44 {
 		// template value a0, a1
 		int[] a = new int[4];
 		int b = 0;
+		int count = 0;
 		// secret value
 		int s2 = 3;
-		int flag = 0;
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			flag3: {
-				for (int j = 0; j < this.image.getWidth(); j += 4) {
-					// 把原本的 j 值暫存起來
-					flag = 0;
-					if (j >= 255) {
-						break flag3;
-					} else {
-						// System.out.println(i + " " + j);
-						b = 0;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
 
-						if (a[0] == 0 | a[1] == 0 | a[2] == 0 | a[3] == 0) {
+		while (count < (32 * 32 * 32) - 1) {
 
-						} else {
-							flag = 1;
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
 
-							tempValue = (int) ((a[0] + (a[1] * s2)
-									+ (a[2] * (Math.pow(s2, 2))) + a[3]
-									* (Math.pow(s2, 3))) % 251);
-							this.sp3.add(tempValue);
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp3.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(file, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test44_3.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
+			tempValue = (int) ((a[0] + (a[1] * s2) + (a[2] * (Math.pow(s2, 2))) + a[3]
+					* (Math.pow(s2, 3))) % 251);
+			this.sp3.add(tempValue);
+			/*
+			 * try { String charSp = Integer.toString(sp3.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new FileOutputStream(file,
+			 * true), "UTF-8")); fw.append(charSp); fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test44_3.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp3.get(ii));
+			try {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp3.get(ii));
 
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// ////////////CSV File/////////////////////////
-					}
-					if (flag == 1)
-						ii++;
-				}
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			// ////////////CSV File/////////////////////////
+			ii++;
 		}
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
@@ -368,74 +367,53 @@ public class GenWaterBit44 {
 		// template value a0, a1
 		int[] a = new int[4];
 		int b = 0;
+		int count = 0;
 		// secret value
 		int s3 = 4;
-		int flag = 0;
-		for (int i = 0; i < this.image.getHeight(); i++) {
-			flag3: {
-				for (int j = 0; j < this.image.getWidth(); j += 4) {
-					// 把原本的 j 值暫存起來
-					flag = 0;
-					if (j >= 255) {
-						break flag3;
-					} else {
-						// System.out.println(i + " " + j);
-						b = 0;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
-						b++;
-						a[b] = this.getGrayPixel(i, j + b);
 
-						if (a[0] == 0 | a[1] == 0 | a[2] == 0 | a[3] == 0) {
+		while (count < (32 * 32 * 32) - 1) {
 
-						} else {
-							flag = 1;
-							tempValue = (int) ((a[0] + (a[1] * s3)
-									+ (a[2] * (Math.pow(s3, 2))) + a[3]
-									* (Math.pow(s3, 3))) % 251);
-							this.sp4.add(tempValue);
-							/*
-							 * try { String charSp =
-							 * Integer.toString(sp4.get(ii)); fw = new
-							 * BufferedWriter(new OutputStreamWriter( new
-							 * FileOutputStream(file, true), "UTF-8"));
-							 * fw.append(charSp); fw.append(", "); fw.flush();
-							 * 
-							 * } catch (Exception e) { e.printStackTrace(); }
-							 */
-							// ////////////CSV File/////////////////////////
-							String outputFile = "test44_4.csv";
-							boolean alreadyExists = new File(outputFile)
-									.exists();
+			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			tempValue = (int) ((a[0] + (a[1] * s3) + (a[2] * (Math.pow(s3, 2))) + a[3]
+					* (Math.pow(s3, 3))) % 251);
+			this.sp4.add(tempValue);
+			/*
+			 * try { String charSp = Integer.toString(sp4.get(ii)); fw = new
+			 * BufferedWriter(new OutputStreamWriter( new FileOutputStream(file,
+			 * true), "UTF-8")); fw.append(charSp); fw.append(", "); fw.flush();
+			 * 
+			 * } catch (Exception e) { e.printStackTrace(); }
+			 */
+			// ////////////CSV File/////////////////////////
+			String outputFile = "test44_4.csv";
+			boolean alreadyExists = new File(outputFile).exists();
 
-							try {
-								// use FileWriter constructor that specifies
-								// open for appending
-								CsvWriter csvOutput = new CsvWriter(
-										new FileWriter(outputFile, true), ',');
-								String charSp = Integer.toString(sp4.get(ii));
+			try {
+				// use FileWriter constructor that specifies
+				// open for appending
+				CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile,
+						true), ',');
+				String charSp = Integer.toString(sp4.get(ii));
 
-								csvOutput.write(charSp);
-								csvOutput.endRecord();
-								csvOutput.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// ////////////CSV File/////////////////////////
-					}
-					if (flag == 1)
-						ii++;
-				}
+				csvOutput.write(charSp);
+				csvOutput.endRecord();
+				csvOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			// ////////////CSV File/////////////////////////
+			ii++;
 		}
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
 		 * e.printStackTrace(); } }
 		 */
 	}
-
 }

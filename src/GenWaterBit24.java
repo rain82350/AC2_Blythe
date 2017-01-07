@@ -77,6 +77,7 @@ public class GenWaterBit24 {
 			this.genWatermark24_2();
 			this.genWatermark24_3();
 			this.genWatermark24_4();
+			System.out.println("Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -201,8 +202,7 @@ public class GenWaterBit24 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
-			// //////////////////////////////////////CSV
-			// File///////////////////////////////////////
+			// ////////////CSV File/////////////////////////
 			String outputFile = "test24_11.csv";
 			boolean alreadyExists = new File(outputFile).exists();
 

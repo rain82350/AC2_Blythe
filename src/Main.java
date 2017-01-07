@@ -37,7 +37,7 @@ public class Main {
 
 		// 計算secret的pixel值(要分配到每個CoverImage的)
 		// waterbit24.getWatermark24_1();
-		GenWaterBit24 waterbit24 = new GenWaterBit24(subSecretInput1, T, 0);
+		GenWaterBit44 waterbit44 = new GenWaterBit44(subSecretInput1, T, 0);
 		// System.out.println(waterbit34.getWatermark34_1().get(85));
 		// System.out.println(waterbit34.getWatermark34_1().size());
 
