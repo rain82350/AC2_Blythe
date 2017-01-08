@@ -48,7 +48,7 @@ public class GenWaterBit44 {
 			green = 0;
 			blue = 0;
 
-			// this.genWatermark44_1();
+			 this.genWatermark44_1();
 			this.genWatermark44_2();
 			this.genWatermark44_3();
 			this.genWatermark44_4();
@@ -72,9 +72,9 @@ public class GenWaterBit44 {
 
 			this.arr2ArrList();
 			this.genWatermark44_1();
-			//this.genWatermark44_2();
-			//this.genWatermark44_3();
-			//this.genWatermark44_4();
+			this.genWatermark44_2();
+			this.genWatermark44_3();
+			this.genWatermark44_4();
 			System.out
 					.println("44 Watermarkbits have been generated successful ! ");
 
@@ -174,7 +174,7 @@ public class GenWaterBit44 {
 		File file = new File("watermarkBit44_1.txt");
 		// template value a0, a1, a2
 
-		while (count < (32 * 32 * 32) - 1) {
+		while (count < (32 * 32 * 16) - 1) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -248,7 +248,7 @@ public class GenWaterBit44 {
 		// secret value
 		int s1 = 2;
 
-		while (count < (32 * 32 * 32) - 1) {
+		while (count < (32 * 32 * 16) - 1) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -311,7 +311,7 @@ public class GenWaterBit44 {
 		// secret value
 		int s2 = 3;
 
-		while (count < (32 * 32 * 32) - 1) {
+		while (count < (32 * 32 * 16) - 1) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -374,7 +374,7 @@ public class GenWaterBit44 {
 		// secret value
 		int s3 = 4;
 
-		while (count < (32 * 32 * 32) - 1) {
+		while (count < (32 * 32 * 16) - 1) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);

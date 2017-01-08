@@ -72,9 +72,9 @@ public class GenWaterBit34 {
 
 			this.arr2ArrList();
 			this.genWatermark34_1();
-			//this.genWatermark34_2();
-			//this.genWatermark34_3();
-			//this.genWatermark34_4();
+			this.genWatermark34_2();
+			this.genWatermark34_3();
+			this.genWatermark34_4();
 			System.out
 			.println("34 Watermarkbits have been generated successful ! ");
 
@@ -179,7 +179,7 @@ public class GenWaterBit34 {
 		File testfile = new File("test34_1.txt");
 		// template value a0, a1, a2
 
-		while (count < (32 * 32 * 32) - 2) {
+		while (count < (32 * 32 * 16) - 2) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -198,6 +198,7 @@ public class GenWaterBit34 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test34_1.csv";
 			// boolean alreadyExists = new File(outputFile).exists();
@@ -216,16 +217,16 @@ public class GenWaterBit34 {
 				e.printStackTrace();
 			}
 
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 
 			ii++;
 		}
 
 		// System.out.println(count);
 		// special case [Last Value]
-		c[0] = this.pixelArrList.get(count++);
-		c[1] = this.pixelArrList.get(count);
-		tempValue = (c[0] + c[1]) % 251;
+		c[0] = this.pixelArrList.get(count);
+		//c[1] = this.pixelArrList.get(count);
+		tempValue = (c[0]) % 251;
 		this.sp1.add(tempValue);
 		// System.out.println("After Special case: " + count);
 
@@ -252,7 +253,7 @@ public class GenWaterBit34 {
 		// secret value
 		int s1 = 2;
 		int flag = 0;
-		while (count < (32 * 32 * 32) - 2) {
+		while (count < (32 * 32 * 16) - 2) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -295,9 +296,9 @@ public class GenWaterBit34 {
 		}
 
 		// special case
-		c[0] = this.pixelArrList.get(count++);
-		c[1] = this.pixelArrList.get(count);
-		tempValue = (int) ((c[0] + (c[1] * s1)) % 251);
+		c[0] = this.pixelArrList.get(count);
+		//c[1] = this.pixelArrList.get(count);
+		tempValue = (int) ((c[0] ) % 251);
 		this.sp2.add(tempValue);
 
 		/*
@@ -323,7 +324,7 @@ public class GenWaterBit34 {
 		// secret value
 		int s2 = 3;
 		int flag = 0;
-		while (count < (32 * 32 * 32) - 2) {
+		while (count < (32 * 32 * 16) - 2) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -366,9 +367,9 @@ public class GenWaterBit34 {
 		}
 
 		// special case (255, 255)
-		c[0] = this.pixelArrList.get(count++);
-		c[1] = this.pixelArrList.get(count);
-		tempValue = (int) ((c[0] + (c[1] * s2)) % 251);
+		c[0] = this.pixelArrList.get(count);
+		//c[1] = this.pixelArrList.get(count);
+		tempValue = (int) ((c[0] ) % 251);
 		this.sp3.add(tempValue);
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {
@@ -393,7 +394,7 @@ public class GenWaterBit34 {
 		// secret value
 		int s3 = 4;
 		int flag = 0;
-		while (count < (32 * 32 * 32) - 2) {
+		while (count < (32 * 32 * 16) - 2) {
 
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
@@ -436,9 +437,9 @@ public class GenWaterBit34 {
 		}
 
 		// special case "Last value"
-		c[0] = this.pixelArrList.get(count++);
-		c[1] = this.pixelArrList.get(count);
-		tempValue = (int) ((c[0] + (c[1] * s3)) % 251);
+		c[0] = this.pixelArrList.get(count);
+		//c[1] = this.pixelArrList.get(count);
+		tempValue = (int) ((c[0] ) % 251);
 		this.sp4.add(tempValue);
 		/*
 		 * if (fw != null) { try { fw.close(); } catch (Exception e) {

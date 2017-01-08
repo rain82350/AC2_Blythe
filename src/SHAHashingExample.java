@@ -43,7 +43,7 @@ public class SHAHashingExample {
 		*/
 	}
 	
-	public static int hash (String s) throws NoSuchAlgorithmException{
+	public static String hash (String s) throws NoSuchAlgorithmException{
 		
 
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -51,6 +51,7 @@ public class SHAHashingExample {
         byte byteData[] = md.digest();
         String a = new String();
         int b=0;
+        String c =null;
         
         //convert the byte to hex format method
         StringBuffer sb = new StringBuffer();
@@ -60,8 +61,9 @@ public class SHAHashingExample {
         
         a = sb.charAt(0)+"";
         b = Integer.valueOf(a);
+        c = Integer.toBinaryString(b);
         //System.out.println(b);
-		return b;
+		return c.charAt(0)+"";
 	}
 
 }
