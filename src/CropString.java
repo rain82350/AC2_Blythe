@@ -73,23 +73,32 @@ public class CropString {
 		// Count watermark value
 		int count2 = 0;
 		int b = 0;
-		// 每7個pixel為一個block，7 個 temp value
-		int[] a = new int[7];
-		// 7個temp value轉成binary形式
-		String[] aa = new String[7];
-		StringBuffer[] buffer = new StringBuffer[7];
+		// 每10個pixel為一個block，10 個 temp value
+		int[] a = new int[10];
+		// 10個temp value轉成binary形式
+		String[] aa = new String[10];
+		// StringBuffer[] buffer = new StringBuffer[10];
 		String waterValue = new String();
-		String[] w = new String[8];
-		int[] strLen = new int[8];
+		String[] w = new String[11];
+		int[] strLen = new int[11];
 		// Check bit
-		String aut = new String();
+		String aut = "";
 		// Result pixel value
 		this.embedPixel = new ArrayList<Integer>();
 
-		while (count < (512 * 512) && count2 < 35499) {
+		while (count < (512 * 512) && count2 < 25942) {
 
 			// seven pixels a block
 			b = 0;
+			a[b] = this.pixelArrList.get(count++);
+			aa[b] = Integer.toBinaryString(a[b]);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			aa[b] = Integer.toBinaryString(a[b]);
+			b++;
+			a[b] = this.pixelArrList.get(count++);
+			aa[b] = Integer.toBinaryString(a[b]);
+			b++;
 			a[b] = this.pixelArrList.get(count++);
 			aa[b] = Integer.toBinaryString(a[b]);
 			b++;
@@ -119,7 +128,10 @@ public class CropString {
 			strLen[4] = aa[4].length();
 			strLen[5] = aa[5].length();
 			strLen[6] = aa[6].length();
-			for (int i = 0; i < 7; i++) {
+			strLen[7] = aa[7].length();
+			strLen[8] = aa[8].length();
+			strLen[9] = aa[9].length();
+			for (int i = 0; i < 10; i++) {
 				if (aa[i].length() < 8) {
 
 					while (aa[i].length() < 8) {
@@ -142,62 +154,46 @@ public class CropString {
 					sb.append("0").append(waterValue);// 左補0
 					// sb.append(str).append("0");//右補0
 					waterValue = sb.toString();
-					strLen[7] = waterValue.length();
+					strLen[10] = waterValue.length();
 				}
 				// System.out.println("sp"+ this.sp);
 			}
 
+			//System.out.println("Star aut:" + aut);
 			// System.out.println("aa[], sp OK !");
-			if (count2 < 35498) {
-				aut.concat(Integer.toBinaryString(sp.get(count2)))
+			if (count2 < 25941) {
+				aut=aut.concat(Integer.toBinaryString(sp.get(count2)))
 						.concat(Integer.toBinaryString(sp.get(count2 + 1)))
 						.concat(aa[0].substring(0, 7))
 						.concat(aa[1].substring(0, 7))
 						.concat(aa[2].substring(0, 7))
 						.concat(aa[3].substring(0, 7))
 						.concat(aa[4].substring(0, 7))
-						.concat(aa[5].substring(0, 6))
-						.concat(aa[6].substring(0, 6))
+						.concat(aa[5].substring(0, 7))
+						.concat(aa[6].substring(0, 7))
+						.concat(aa[7].substring(0, 7))
+						.concat(aa[8].substring(0, 7))
+						.concat(aa[9].substring(0, 7))
 						.concat(Integer.toBinaryString(count2));
 
 			} else {
-				aut.concat(Integer.toBinaryString(sp.get(count2)))
-				.concat(Integer.toBinaryString(sp.get(count2 )))
-				.concat(aa[0].substring(0, 7))
-				.concat(aa[1].substring(0, 7))
-				.concat(aa[2].substring(0, 7))
-				.concat(aa[3].substring(0, 7))
-				.concat(aa[4].substring(0, 7))
-				.concat(aa[5].substring(0, 6))
-				.concat(aa[6].substring(0, 6))
-				.concat(Integer.toBinaryString(count2));
+				aut=aut.concat(Integer.toBinaryString(sp.get(count2)))
+						.concat(Integer.toBinaryString(sp.get(count2)))
+						.concat(aa[0].substring(0, 7))
+						.concat(aa[1].substring(0, 7))
+						.concat(aa[2].substring(0, 7))
+						.concat(aa[3].substring(0, 7))
+						.concat(aa[4].substring(0, 7))
+						.concat(aa[5].substring(0, 7))
+						.concat(aa[6].substring(0, 7))
+						.concat(aa[7].substring(0, 7))
+						.concat(aa[8].substring(0, 7))
+						.concat(aa[9].substring(0, 7))
+						.concat(Integer.toBinaryString(count2));
 			}
 
-			if (count<35498){
-			// Calculate Aut(check bit)
-			aut.concat(Integer.toBinaryString(sp.get(count2)))
-					.concat(Integer.toBinaryString(sp.get(count2 + 1)))
-					.concat(aa[0].substring(0, 7))
-					.concat(aa[1].substring(0, 7))
-					.concat(aa[2].substring(0, 7))
-					.concat(aa[3].substring(0, 7))
-					.concat(aa[4].substring(0, 7))
-					.concat(aa[5].substring(0, 6))
-					.concat(aa[6].substring(0, 6))
-					.concat(Integer.toBinaryString(count2));
-			}else{
-				aut.concat(Integer.toBinaryString(sp.get(count2)))
-				.concat(Integer.toBinaryString(sp.get(count2)))
-				.concat(aa[0].substring(0, 7))
-				.concat(aa[1].substring(0, 7))
-				.concat(aa[2].substring(0, 7))
-				.concat(aa[3].substring(0, 7))
-				.concat(aa[4].substring(0, 7))
-				.concat(aa[5].substring(0, 6))
-				.concat(aa[6].substring(0, 6))
-				.concat(Integer.toBinaryString(count2));
-			}
-			// aut = this.hash(aut);
+			//System.out.println("End aut: "+aut);
+			//aut = this.hash(aut);
 
 			// Produce waterValue substring[ 1-5 pixel are embedded 1 bit][6-7
 			// pixel are embedded 2 bits.]
@@ -206,12 +202,13 @@ public class CropString {
 			aa[2] = aa[2].substring(0, 7).concat(waterValue.charAt(2) + "");
 			aa[3] = aa[3].substring(0, 7).concat(waterValue.charAt(3) + "");
 			aa[4] = aa[4].substring(0, 7).concat(waterValue.charAt(4) + "");
-			aa[5] = aa[5].substring(0, 6).concat(waterValue.charAt(5) + "")
-					.concat(waterValue.charAt(7) + "");
-			aa[6] = aa[6].substring(0, 6).concat(waterValue.charAt(6) + "")
-					.concat(aut);
-			// .concat(str)
-
+			aa[5] = aa[5].substring(0, 7).concat(waterValue.charAt(5) + "");
+			aa[6] = aa[6].substring(0, 7).concat(waterValue.charAt(6) + "");
+			aa[7] = aa[7].substring(0, 7).concat(waterValue.charAt(7) + "");
+			aa[8] = aa[8].substring(0, 7).concat(aut.charAt(0) + "");
+			aa[9] = aa[9].substring(0, 7).concat(aut.charAt(1) + "");
+			
+			
 			this.embedPixel.add(Integer.valueOf(aa[0]));
 			this.embedPixel.add(Integer.valueOf(aa[1]));
 			this.embedPixel.add(Integer.valueOf(aa[2]));
@@ -219,6 +216,9 @@ public class CropString {
 			this.embedPixel.add(Integer.valueOf(aa[4]));
 			this.embedPixel.add(Integer.valueOf(aa[5]));
 			this.embedPixel.add(Integer.valueOf(aa[6]));
+			this.embedPixel.add(Integer.valueOf(aa[7]));
+			this.embedPixel.add(Integer.valueOf(aa[8]));
+			this.embedPixel.add(Integer.valueOf(aa[9]));
 
 			count2++;
 			// System.out.println("Nest round! ");
@@ -256,7 +256,7 @@ public class CropString {
 		b = Integer.valueOf(a);
 		c = Integer.toBinaryString(b);
 		// System.out.println(b);
-		return c.charAt(0) + "";
+		return c;
 	}
 
 }

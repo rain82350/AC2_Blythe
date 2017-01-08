@@ -74,9 +74,9 @@ public class GenWaterBit24 {
 
 			this.arr2ArrList();
 			this.genWatermark24_1();
-			this.genWatermark24_2();
-			this.genWatermark24_3();
-			this.genWatermark24_4();
+			//this.genWatermark24_2();
+			//this.genWatermark24_3();
+			//this.genWatermark24_4();
 			System.out.println("24 Watermarkbits have been generated successful ! ");
 
 		} catch (IOException e) {

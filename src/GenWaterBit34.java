@@ -72,9 +72,9 @@ public class GenWaterBit34 {
 
 			this.arr2ArrList();
 			this.genWatermark34_1();
-			this.genWatermark34_2();
-			this.genWatermark34_3();
-			this.genWatermark34_4();
+			//this.genWatermark34_2();
+			//this.genWatermark34_3();
+			//this.genWatermark34_4();
 			System.out
 			.println("34 Watermarkbits have been generated successful ! ");
 
