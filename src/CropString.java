@@ -1,7 +1,10 @@
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ public class CropString {
 	ArrayList<Integer> sp34 = new ArrayList<Integer>();
 	ArrayList<Integer> sp44 = new ArrayList<Integer>();
 	ArrayList<Integer> pixelArrList = new ArrayList<Integer>();
-	ArrayList<Integer> embedPixel;
+	ArrayList<Integer> embedPixel = new ArrayList<Integer>();
 
 	private String subString;
 	private String sp;
@@ -61,6 +64,9 @@ public class CropString {
 		System.out.println("PixelArrList size: " + this.pixelArrList.size());
 		return this.pixelArrList;
 	}
+	public ArrayList<Integer> getArrList(){
+		return this.pixelArrList;
+	}
 
 	public ArrayList<Integer> Embed(ArrayList<Integer> sp)
 			throws NoSuchAlgorithmException {
@@ -77,6 +83,7 @@ public class CropString {
 		int[] a = new int[10];
 		// 10temp value锣ΘbinaryΑ
 		String[] aa = new String[10];
+		
 		// StringBuffer[] buffer = new StringBuffer[10];
 		String waterValue = new String();
 		String[] w = new String[11];
@@ -84,7 +91,9 @@ public class CropString {
 		// Check bit
 		String aut = "";
 		// Result pixel value
-		this.embedPixel = new ArrayList<Integer>();
+		
+		BufferedWriter fw = null;
+		File file = new File("embedPixelCheck0109.txt");
 
 		while (count < (512 * 512) && count2 < 25942) {
 
@@ -92,6 +101,7 @@ public class CropString {
 			b = 0;
 			a[b] = this.pixelArrList.get(count++);
 			aa[b] = Integer.toBinaryString(a[b]);
+			
 			b++;
 			a[b] = this.pixelArrList.get(count++);
 			aa[b] = Integer.toBinaryString(a[b]);
@@ -121,16 +131,17 @@ public class CropString {
 			aa[b] = Integer.toBinaryString(a[b]);
 
 			// Check String length
-			strLen[0] = aa[0].length();
-			strLen[1] = aa[1].length();
-			strLen[2] = aa[2].length();
-			strLen[3] = aa[3].length();
-			strLen[4] = aa[4].length();
-			strLen[5] = aa[5].length();
-			strLen[6] = aa[6].length();
-			strLen[7] = aa[7].length();
-			strLen[8] = aa[8].length();
-			strLen[9] = aa[9].length();
+//			strLen[0] = aa[0].length();
+//			strLen[1] = aa[1].length();
+//			strLen[2] = aa[2].length();
+//			strLen[3] = aa[3].length();
+//			strLen[4] = aa[4].length();
+//			strLen[5] = aa[5].length();
+//			strLen[6] = aa[6].length();
+//			strLen[7] = aa[7].length();
+//			strLen[8] = aa[8].length();
+//			strLen[9] = aa[9].length();
+			
 			for (int i = 0; i < 10; i++) {
 				if (aa[i].length() < 8) {
 
@@ -139,7 +150,7 @@ public class CropString {
 						sb.append("0").append(aa[i]);// オ干0
 						// sb.append(str).append("0");//干0
 						aa[i] = sb.toString();
-						strLen[i] = aa[i].length();
+//						strLen[i] = aa[i].length();
 					}
 					// System.out.println("sp"+ this.sp);
 				}
@@ -147,6 +158,7 @@ public class CropString {
 			// watermark value
 
 			waterValue = Integer.toBinaryString(sp.get(count2));
+
 			if (waterValue.length() < 8) {
 
 				while (waterValue.length() < 8) {
@@ -154,15 +166,17 @@ public class CropString {
 					sb.append("0").append(waterValue);// オ干0
 					// sb.append(str).append("0");//干0
 					waterValue = sb.toString();
-					strLen[10] = waterValue.length();
+					// strLen[10] = waterValue.length();
 				}
 				// System.out.println("sp"+ this.sp);
 			}
 
-			//System.out.println("Star aut:" + aut);
+			// System.out.println(" water: "+ waterValue);
+
+			// System.out.println("Star aut:" + aut);
 			// System.out.println("aa[], sp OK !");
 			if (count2 < 25941) {
-				aut=aut.concat(Integer.toBinaryString(sp.get(count2)))
+				aut = aut.concat(Integer.toBinaryString(sp.get(count2)))
 						.concat(Integer.toBinaryString(sp.get(count2 + 1)))
 						.concat(aa[0].substring(0, 7))
 						.concat(aa[1].substring(0, 7))
@@ -177,7 +191,7 @@ public class CropString {
 						.concat(Integer.toBinaryString(count2));
 
 			} else {
-				aut=aut.concat(Integer.toBinaryString(sp.get(count2)))
+				aut = aut.concat(Integer.toBinaryString(sp.get(count2)))
 						.concat(Integer.toBinaryString(sp.get(count2)))
 						.concat(aa[0].substring(0, 7))
 						.concat(aa[1].substring(0, 7))
@@ -192,11 +206,13 @@ public class CropString {
 						.concat(Integer.toBinaryString(count2));
 			}
 
-			//System.out.println("End aut: "+aut);
-			//aut = this.hash(aut);
+//			System.out.println("碠玡(10): "+a[0]+" 碠玡(2): "+aa[0]);
+			// System.out.println("End aut: "+aut);
+			// aut = this.hash(aut);
 
 			// Produce waterValue substring[ 1-5 pixel are embedded 1 bit][6-7
 			// pixel are embedded 2 bits.]
+			
 			aa[0] = aa[0].substring(0, 7).concat(waterValue.charAt(0) + "");
 			aa[1] = aa[1].substring(0, 7).concat(waterValue.charAt(1) + "");
 			aa[2] = aa[2].substring(0, 7).concat(waterValue.charAt(2) + "");
@@ -209,17 +225,37 @@ public class CropString {
 			aa[9] = aa[9].substring(0, 7).concat(aut.charAt(1) + "");
 			
 			
-			this.embedPixel.add(Integer.valueOf(aa[0]));
-			this.embedPixel.add(Integer.valueOf(aa[1]));
-			this.embedPixel.add(Integer.valueOf(aa[2]));
-			this.embedPixel.add(Integer.valueOf(aa[3]));
-			this.embedPixel.add(Integer.valueOf(aa[4]));
-			this.embedPixel.add(Integer.valueOf(aa[5]));
-			this.embedPixel.add(Integer.valueOf(aa[6]));
-			this.embedPixel.add(Integer.valueOf(aa[7]));
-			this.embedPixel.add(Integer.valueOf(aa[8]));
-			this.embedPixel.add(Integer.valueOf(aa[9]));
+			// System.out.println(aa[0]);
+			
 
+			this.embedPixel.add(Integer.valueOf(aa[0], 2));
+			this.embedPixel.add(Integer.valueOf(aa[1], 2));
+			this.embedPixel.add(Integer.valueOf(aa[2], 2));
+			this.embedPixel.add(Integer.valueOf(aa[3], 2));
+			this.embedPixel.add(Integer.valueOf(aa[4], 2));
+			this.embedPixel.add(Integer.valueOf(aa[5], 2));
+			this.embedPixel.add(Integer.valueOf(aa[6], 2));
+			this.embedPixel.add(Integer.valueOf(aa[7], 2));
+			this.embedPixel.add(Integer.valueOf(aa[8], 2));
+			this.embedPixel.add(Integer.valueOf(aa[9], 2));
+//			for (int ii = 0; ii < 7; ii++) {
+//				try {
+//					String charSp = Integer.toString(embedPixel.get(ii));
+//					fw = new BufferedWriter(new OutputStreamWriter(
+//							new FileOutputStream(file, true), "UTF-8"));
+//					fw.append(charSp);
+//					fw.append(", ");
+//					fw.flush();
+//
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			int c = 0;
+//			System.out.println("碠(10): "+this.embedPixel.get(c)+" 碠(2): "+aa[0]);
+//			System.out.println("碠(10): "+this.embedPixel.get(c+1)+" 碠(2): "+aa[1]);
+//			System.out.println("碠(10): "+this.embedPixel.get(c+2)+" 碠(2): "+aa[2]);
+//			c=c+10;
 			count2++;
 			// System.out.println("Nest round! ");
 
@@ -227,7 +263,7 @@ public class CropString {
 
 		System.out.println("Count2: " + count2);
 		System.out.println("Dynamic embedding has been completed !");
-		System.out.println(this.embedPixel.size());
+		// System.out.println(this.embedPixel.size());
 		return this.embedPixel;
 
 	}

@@ -73,8 +73,8 @@ public class GenWaterBit24 {
 			this.width = this.image.getWidth();
 
 			this.arr2ArrList();
-			this.genWatermark24_1();
-			//this.genWatermark24_2();
+			//this.genWatermark24_1();
+			this.genWatermark24_2();
 			//this.genWatermark24_3();
 			//this.genWatermark24_4();
 			System.out.println("24 Watermarkbits have been generated successful ! ");
@@ -271,7 +271,7 @@ public class GenWaterBit24 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
-
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test24_21.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -300,7 +300,7 @@ public class GenWaterBit24 {
 				e.printStackTrace();
 			}
 
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 
 			ii++;
 
@@ -344,7 +344,7 @@ public class GenWaterBit24 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
-
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test24_31.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -373,7 +373,7 @@ public class GenWaterBit24 {
 				e.printStackTrace();
 			}
 
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 
 			ii++;
 		}
@@ -416,7 +416,7 @@ public class GenWaterBit24 {
 			 * 
 			 * } catch (Exception e) { e.printStackTrace(); }
 			 */
-
+			/*
 			// ////////////CSV File/////////////////////////
 			String outputFile = "test24_41.csv";
 			boolean alreadyExists = new File(outputFile).exists();
@@ -444,7 +444,7 @@ public class GenWaterBit24 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// ////////////CSV File/////////////////////////
+			// ////////////CSV File/////////////////////////*/
 			ii++;
 
 		}

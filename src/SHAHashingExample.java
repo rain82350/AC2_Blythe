@@ -63,7 +63,7 @@ public class SHAHashingExample {
         b = Integer.valueOf(a);
         c = Integer.toBinaryString(b);
         //System.out.println(b);
-		return c.charAt(0)+"";
+		return c;
 	}
 
 }
