@@ -16,6 +16,7 @@ public class Main {
 
 	final static public int N = 4;
 	final static public int T = 2;
+	//According to different cover image to change the input file and change the following method().
 	// File secretInput = new File("lena_gray_256.png");
 	static File coverInput1 = new File("peppers_gray.png");
 //	static File coverInput2 = new File("peppers_gray.png");
@@ -28,19 +29,13 @@ public class Main {
 	static int[] Pixel1;
 	static int[] stegoPixel1 = new int[512 * 512];
 
-	// static BufferedImage cover1 = null;
-
-	// Stego image
-
-	// ImageSource secret = new ImageSource(secretInput, T, 0);
 	static ImageSource stego1 = new ImageSource(coverInput1, T, 0);
-	// static ImageSource secret1 = new ImageSource(subSecretInput1, T, 0);
-
+	
 	static BufferedImage stegoImage1 = new BufferedImage(stego1.getHeight(),
 			stego1.getWidth(), BufferedImage.TYPE_INT_RGB);
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		// TODO Auto-generated method stub
+		
 
 		// System.out.println("S_Height: " + secret1.getHeight() + ", S_Width: "
 		// + secret1.getWidth());
@@ -59,17 +54,14 @@ public class Main {
 
 		// Temp watermark value
 		ArrayList<Integer> waterValue1 = new ArrayList<Integer>();
-		// ArrayList<Integer> waterValue2 = new ArrayList<Integer>();
-		// ArrayList<Integer> waterValue3 = new ArrayList<Integer>();
-		// ArrayList<Integer> waterValue4 = new ArrayList<Integer>();
+		
 		// After dynamic embeding pixel value
 		ArrayList<Integer> coverValue1 = new ArrayList<Integer>();
 		ArrayList<Integer> resultValue1 = new ArrayList<Integer>();
-		// ArrayList<Integer> resultValue2 = new ArrayList<Integer>();
-		// ArrayList<Integer> resultValue3 = new ArrayList<Integer>();
-		// ArrayList<Integer> resultValue4 = new ArrayList<Integer>();
+		
 		// For Cover image 1
 
+		//將watermarkbit串接起來
 		waterValue1 = waterbit24.getWatermark24_2();
 		waterValue1.addAll(waterbit34.getWatermark34_2());
 		waterValue1.addAll(waterbit44.getWatermark44_2());
@@ -90,23 +82,7 @@ public class Main {
 		// }
 		// }
 		//
-		// System.out.println("WaterValue1: " + waterValue1.size());
-		/*
-		 * // For Cover image 2 waterValue2 = waterbit24.getWatermark24_2();
-		 * waterValue2.addAll(waterbit34.getWatermark34_2());
-		 * waterValue2.addAll(waterbit44.getWatermark44_2());
-		 * System.out.println("WaterValue2: "+waterValue2.size());
-		 * 
-		 * // For Cover image 3 waterValue3 = waterbit24.getWatermark24_3();
-		 * waterValue3.addAll(waterbit34.getWatermark34_3());
-		 * waterValue3.addAll(waterbit44.getWatermark44_3());
-		 * System.out.println("WaterValue3: "+waterValue3.size());
-		 * 
-		 * // For Cover image 4 waterValue4 = waterbit24.getWatermark24_4();
-		 * waterValue4.addAll(waterbit34.getWatermark34_4());
-		 * waterValue4.addAll(waterbit44.getWatermark44_4());
-		 * System.out.println("WaterValue4: "+waterValue4.size());
-		 */
+		
 		System.out.println("Watermark Value have been generated OK!! :D");
 		// Produce dynamic embedding pixel value
 
@@ -123,6 +99,7 @@ public class Main {
 			resultValue1.add(coverValue1.get(i));
 		}
 		
+		//將arraylist轉成array，寫入檔案
 		stegoPixel1 = arraylist2array(resultValue1);
 		
 		int ctr =0;
@@ -136,10 +113,6 @@ public class Main {
 
 		}
 		
-		
-		
-		// stegoImage1 = (BufferedImage) getImageFromArray(stegoPixel1, 512,
-		// 512);
 		try {
 			File ls = new File("StegoImage2.png");
 			ImageIO.write(stegoImage1, "png", ls);
@@ -148,63 +121,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		System.out.println("Stego image has been produced.");
-		// System.out.println("Modefied ResultValue1 size: "+
-		// resultValue1.size());
-
-		// BufferedWriter fw = null;
-		// File file = new File("resultValue1_0109.txt");
-		// for (int ii = 0; ii < 25942; ii++) {
-		// try {
-		// String charSp = Integer.toString(resultValue1.get(ii));
-		// fw = new BufferedWriter(new OutputStreamWriter(
-		// new FileOutputStream(file, true), "UTF-8"));
-		// fw.append(charSp);
-		// fw.append(", ");
-		// fw.flush();
-		//
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// System.out.println("resultValue: " + resultValue1);
-
-		/*
-		 * // For Cover image 2 CropString member2 = new
-		 * CropString(coverInput2); member2.Embed(waterValue2); // For Cover
-		 * image 3 CropString member3 = new CropString(coverInput3);
-		 * member3.Embed(waterValue3); // For Cover image 4 CropString member4 =
-		 * new CropString(coverInput4); member4.Embed(waterValue4);
-		 */
-
-		// int ii = 0;
-		// try {
-		//
-		// for (int i = 0; i < 507; i++) {
-		// for (int j = 0; j < 512; j++) {
-		//
-		// stegoImage1.setRGB(j, i,
-		// (resultValue1.get(ii * i + j) << 16)
-		// | (resultValue1.get(ii * i + j) << 8)
-		// | (resultValue1.get(ii * i + j)));
-		// if (resultValue1.get(ii * i + j) < 128) {
-		// stegoImage1.setRGB(j, i, Color.BLACK.getRGB());
-		// } else {
-		// stegoImage1.setRGB(j, i, Color.WHITE.getRGB());
-		// }
-		//
-		// if (i == 507 && j == 348)
-		// break;
-		// }
-		// ii++;
-		// }
-		// File ls = new File("StegoImage1.png");
-		// ImageIO.write(stegoImage1, "png", ls);
-		// stegoImage1.flush();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// System.out.println("Stego image has been produced.");
-		//
+	
 	}
 
 	public static int[] arraylist2array(ArrayList<Integer> sp) {
@@ -215,13 +132,6 @@ public class Main {
 		return Pixel1;
 	}
 
-	// public static Image getImageFromArray(int[] pixels, int width, int
-	// height) {
-	// BufferedImage image = new BufferedImage(width, height,
-	// BufferedImage.TYPE_INT_RGB);
-	// WritableRaster raster = (WritableRaster) image.getData();
-	// raster.setPixels(0, 0, width, height, pixels);
-	// return image;
-	// }
+
 
 }
