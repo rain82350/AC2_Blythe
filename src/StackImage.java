@@ -17,6 +17,8 @@ public class StackImage {
 	ArrayList<Integer> pixelArrList2 = new ArrayList<Integer>();
 	ArrayList<Integer> pixelArrList3 = new ArrayList<Integer>();
 	ArrayList<Integer> pixelArrList4 = new ArrayList<Integer>();
+	ArrayList<Integer> waterValue = new ArrayList<Integer>();
+	ArrayList<Integer> checkValue = new ArrayList<Integer>();
 	
 	//input 2 subimages
 	StackImage(File imageFile, File imageFile2) {
@@ -30,6 +32,8 @@ public class StackImage {
 			tmpRas = this.image2.getData();
 			this.height2 = this.image2.getHeight();
 			this.width2 = this.image2.getWidth();
+			
+			stack2Subimage();
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -53,7 +57,9 @@ public class StackImage {
 			tmpRas = this.image3.getData();
 			this.height3 = this.image3.getHeight();
 			this.width3 = this.image3.getWidth();
-
+			
+			stack3Subimage();
+			
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
 			e.printStackTrace();
@@ -79,6 +85,8 @@ public class StackImage {
 			tmpRas = this.image4.getData();
 			this.height4 = this.image4.getHeight();
 			this.width4 = this.image4.getWidth();
+			
+			stack4Subimage();
 
 		} catch (IOException e) {
 			System.out.println(" Cannot find the file! ");
@@ -130,12 +138,15 @@ public class StackImage {
 		int b2 = 0;
 		int count =0;
 		int count2 =0;
+		int waterCount = 0;
 		// template array
 		int[] a = new int[10];
 		int[] a2 = new int[10];
 		// template array string pont (decimal -> binary)
 		String[] aa = new String[10];
 		String[] aa2 = new String[10];
+		
+		String s = "";
 		
 		//get pixelvalue from image1 to arraylist
 		for (int i = 0; i < this.height; i++) {
@@ -156,6 +167,15 @@ public class StackImage {
 						a2[b2] = this.pixelArrList2.get(count2++);
 						aa2[b2] = Integer.toBinaryString(a[b2]);
 						b2++;
+						
+						if(z<8){
+							s = s.concat(aa[b].charAt(7)+"");
+							this.waterValue.add(Integer.valueOf(s, 2));
+							System.out.println("This round watermark bit value: "+waterValue.get(waterCount));
+							waterCount++;
+						}else if(z==9 || z==10){
+							
+						}
 						
 					}
 					
